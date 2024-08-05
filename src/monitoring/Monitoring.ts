@@ -1,16 +1,14 @@
 import { IProduct } from "../interface/IProduct";
 import { ScrapWebsite } from "../providers/ScrapWebsite";
+import { main } from "../start";
 import { editProduct } from "./EditProducts";
 
-const products: IProduct[] = [];
+export const products: IProduct[] = [];
 
 const verify = async () => {
   if (products.length == 0) {
     console.log("Nenhum produto sendo monitorado");
-
-    return;
   }
-  console.log("------------------------------------------------");
   for (const product of products) {
     const verifyPrice = await ScrapWebsite(product.URL);
     editProduct(verifyPrice);
@@ -28,7 +26,7 @@ const verify = async () => {
   }
 };
 
-const monitorPrices = async () => {
+export const monitorPrices = async () => {
   const monitorInterval = 60000;
 
   const monitor = async () => {
@@ -37,13 +35,16 @@ const monitorPrices = async () => {
     console.log("Iniciando monitoramento de preços...");
     console.log("------------------------------------------------");
     await verify();
-    setTimeout(monitor, monitorInterval);
+    return;
   };
-
+  
+  setTimeout(monitor, monitorInterval);
   monitor();
+  return
 };
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-export { products, verify, monitorPrices };
+
+

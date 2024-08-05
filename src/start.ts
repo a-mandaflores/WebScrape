@@ -21,8 +21,7 @@ async function main() {
 
 const runApp = async () => {
   try {
-      await monitorPrices()
-
+      monitorPrices()
       await main()
   } catch (error) {
       console.error("Erro ao executar a aplicação:", error)
@@ -30,3 +29,5 @@ const runApp = async () => {
 }
 
 runApp()
+
+export { main }
